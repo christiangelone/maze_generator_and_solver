@@ -13,7 +13,7 @@
 
  ## How to solve maze ?
  * Click on `choose file`
- * Select the maze representation
+ * Select the maze representation file (make sure its extension is .txt)
  * Done!
 
  # Algorithms used for genearation
