@@ -12,6 +12,7 @@
  * Download Maze Representation to posterior solving
 
  ## How to solve maze ?
+ * Open browser console to see results.
  * Click on `choose file`
  * Select the maze representation file (make sure its extension is .txt)
  * Done!
