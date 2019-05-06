@@ -15,3 +15,10 @@
  * Click on `choose file`
  * Select the maze representation
  * Done!
+
+ # Algorithms used for genearation
+  * Random DFS ~ O(E + V)
+  * Recursive Division ~ (DAC) O(E + V)
+
+  # Algorithms used for solving
+  * A* ~ O(E LOG(V)) 
