@@ -373,8 +373,8 @@ function AStarMazeSolver(mazeProps) {
         this._moveFromOpenToClose(goal);
         this._checkGoalNeighbours(goal);
 
-        //this._showCloseSet()
-        //this._showOpenSet()
+        this._showCloseSet()
+        this._showOpenSet()
         this._buildPathSolution(goal);
         this._showPathSolution();
       } else {
