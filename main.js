@@ -346,7 +346,7 @@ function AStarMazeSolver(mazeProps) {
 
   this._solutionFound = () => {
     this._finished = true;
-    console.log('Solved!');
+    console.log(`Solved! (path length: ${this._pathSolution.length} )`);
   }
 
   this._noSolutionFound = () => {
