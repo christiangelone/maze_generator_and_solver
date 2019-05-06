@@ -15,7 +15,7 @@
  * Open browser console to see results.
  * Click on `choose file`
  * Select the maze representation file (make sure its extension is .txt)
- * Done!
+ * Done!, the green path is the solution!
 
  # Algorithms used for genearation
   * Random DFS ~ O(E + V)
