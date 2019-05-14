@@ -91,6 +91,7 @@ function Cell(x, y, size, walls) {
     rect(this._x * this._size.width, this._y * this._size.height, this._size.width, this._size.height)
   }
  
+  // Devuelve las celdas vecinas a la celda actual, a las que se puede ir
   this.getNeighbours = (grid) => {
     return [
       grid.get(this._x + ((this._y - 1) * grid.numOfCols())), // up n
@@ -105,6 +106,7 @@ function Cell(x, y, size, walls) {
     );
   }
 
+  // Devuelve las celdas vecinas a la celda actual tagueadas ('left' 'right' 'up' 'down')
   this.getCategorizedNeighbours = (grid) => {
     return {
       up: grid.get(this._x + ((this._y - 1) * grid.numOfCols())), // up n
@@ -114,6 +116,7 @@ function Cell(x, y, size, walls) {
     }
   }
 
+  // Devuelve las celdas vecinas a la celda actual a las que se puede ir teniendo en cuenta el tag de sus vecinos
   this.getValidNeighbours = (grid) => {
     const neighbours = this.getCategorizedNeighbours(grid);
     return [
@@ -136,11 +139,13 @@ function Cell(x, y, size, walls) {
     ]
   }
 
+  // Devuelve un vecino al azar
   this.getRandomNotVisitedNeighbourCell = (grid) => {
     const neighbours = this.getNeighbours(grid)
     return neighbours[Math.floor(random(0, neighbours.length))];
   }
 
+  // Remueve el muro de la celda basado en el vecino pasado
   this.removeWallBaseOnNeighbour = (cell) => {
     if((this._x - cell.x()) === -1) {
       this.removeWall('right');
@@ -160,6 +165,7 @@ function Cell(x, y, size, walls) {
     }  
   }
 
+  // Muestra los muros 'vivos' de la celda
   this.display = () => {
     stroke(255);
     if(this._walls.up) this._displayUp();
@@ -220,6 +226,7 @@ function Grid(numOfCols, numOfRows, cellDimensions, walls, representation) {
     grid: this._representation
   });
 
+  // Muestra los muros 'vivos' de todas las celdas
   this.display = () => {
     for (let i = 0; i < this._representation.length; i++)
       this._representation[i].display()
@@ -233,6 +240,7 @@ function Maze(props, builder, solver) {
   this._solver = solver ? new solver(props) : null;
   this.gridRepresentation = () => this._builder.gridRepresentation();
 
+  // Muestra el laberinto (esta funcion se ejecuta permanentemente cada 25 frames/s)
   this.display = () => {
     if (this._builder) {
       this._builder.build();
@@ -245,6 +253,7 @@ function Maze(props, builder, solver) {
   }
 }
 
+// https://en.wikipedia.org/wiki/A*_search_algorithm
 function AStarMazeSolver(mazeProps) {
   this._grid = new Grid(
     mazeProps.width,
@@ -386,6 +395,18 @@ function AStarMazeSolver(mazeProps) {
   this.display = () => this._grid.display();
 }
 
+/*  MazeBuilderByDivideAndConquer
+    * Toma el laberinto, lo divide a la mitad y construye un muro con 2 agujeros aleatorios
+      * de forma horizontal si el ancho del laberinto es menor que su alto
+      * luego llama recurisivamente con la mitad superior del laberinto
+      *luego otro llamdo recursivo con la mitad inferior del laberinto
+        
+      * de forma vertical si el ancho del laberinto es mayor que su alto
+      * luego llama recurisivamente con la mitad izquierda del laberinto
+      * luego otro llamdo recursivo con la mitad derecha del laberinto
+      
+    * La condicion de corte es que el tamanio del sub laberinto sea de alto o ancho menor a 2
+*/
 function MazeBuilderByDivideAndConquer(mazeProps){
   this._grid = new Grid(
     mazeProps.width,
@@ -472,6 +493,24 @@ function MazeBuilderByDivideAndConquer(mazeProps){
   }
 }
 
+/*  MazeBuilderByDFS
+    * Mientra no haya terminado
+      * marcar la celda actual como visitada
+      * tomar un vecino no visitado al azar de la celda actual
+      * si hay vecino no visitado
+        * marcarlo como visitado
+        * apilarlo al stack de backtrackin
+        * sacar los muros correspondientes basandose en el vecino visitado
+        * pintar la celda actual
+        * usar como celda actual al vecino
+      * sino, si el stack de backtracking no esta vacio
+        * desapilar la cabeza del stack
+        * usar como celda actual a la celda desapilada
+        * pintar la celda actual
+      * sino
+        * termine
+       
+*/
 function MazeBuilderByDFS(mazeProps){
   this._stack = new Stack();
   this._grid = new Grid(
