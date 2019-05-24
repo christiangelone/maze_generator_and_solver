@@ -40,11 +40,13 @@ function MazeBuilderByDivideAndConquer(mazeProps){
     for (let xi = x; xi <= x2; xi++) {
       const currentCell = this._grid.get(xi + (medy * this._grid.numOfCols()));
       currentCell.addWall('down');
+      currentCell.mark();
     }
     const cell = this._grid.get(
       ((floor(random(x, x2))) + medy * this._grid.numOfCols())
     );
     cell.removeWall('down');
+    cell.mark();
   }
 
 /*************Creacion de muros verticales*************/
@@ -54,11 +56,13 @@ function MazeBuilderByDivideAndConquer(mazeProps){
     for (let yi = y; yi <= y2; yi++) {
       const currentCell = this._grid.get(medx + (yi * this._grid.numOfCols()));
       currentCell.addWall('right');
+      currentCell.mark();
     }
     const cell = this._grid.get(
       (medx + (floor(random(y, y2))) * this._grid.numOfCols())
     );
     cell.removeWall('right');
+    cell.mark();
   }
 
 
@@ -114,13 +118,13 @@ function MazeBuilderByDivideAndConquer(mazeProps){
                                         wall.lastValueX(),
                                         wall.firstValueY(),
                                         wall.lastValueY());
-        } else if (wall.horizontal()) {
+      } else if (wall.horizontal()) {
           this._buildMiddleHorizontalWall(wall.firstValueX(),
                                           wall.lastValueX(),
                                           wall.firstValueY(),
                                           wall.lastValueY());
         } else {
-          alert('FALLO FATAL');
+          alert('EPIC FAIL');
         }
       } else {
         alert('MAZE FINISHED!');
