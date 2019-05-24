@@ -113,16 +113,16 @@ function MazeBuilderByDivideAndConquer(mazeProps){
       
       var wall = this._walls.dequeue();
       if (wall) {
-      if (wall.vertical()) {
-          this._buildMiddleVerticalWall(wall.firstValueX(),
-                                        wall.lastValueX(),
-                                        wall.firstValueY(),
-                                        wall.lastValueY());
-      } else if (wall.horizontal()) {
-          this._buildMiddleHorizontalWall(wall.firstValueX(),
+        if (wall.vertical()) {
+            this._buildMiddleVerticalWall(wall.firstValueX(),
                                           wall.lastValueX(),
                                           wall.firstValueY(),
                                           wall.lastValueY());
+        } else if (wall.horizontal()) {
+            this._buildMiddleHorizontalWall(wall.firstValueX(),
+                                            wall.lastValueX(),
+                                            wall.firstValueY(),
+                                            wall.lastValueY());
         } else {
           alert('EPIC FAIL');
         }
